@@ -15,7 +15,12 @@ class Program
             case "help":
                 DisplayHelper();
                 break;
+            case "create":
+                break;
+            case "list":
+                break;
             default:
+                Console.WriteLine($"commande {args[0]} inconnu\nVoir `lyx help` pour plus d'information");
                 break;
         }
 
