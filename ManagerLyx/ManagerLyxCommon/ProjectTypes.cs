@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProjectManagerCommon
 {
-    public class IProjectTypes
+    public class ProjectTypes
     {
 
         public string Default { get; set; } = "Aucun";

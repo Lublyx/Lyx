@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ManagerLyxCommon;
 using ProjectManagerCommon;
 
 
@@ -12,69 +13,69 @@ namespace ProjectManagerLibs
 {
     public class CreateProjectHelper
     {
-        private IProjectTypes _projecttypes = new IProjectTypes();
+        private ProjectTypes _projecttypes = new ProjectTypes();
         private string _currentDirectory = Directory.GetCurrentDirectory();
 
-        public void InitProject(IProjectInfo project)
+        public void InitProject<T>(ProjectInfo<T> project) where T : IProjectBase
         {
-            _currentDirectory = Path.Combine(_currentDirectory, project.Name);
+            _currentDirectory = Path.Combine(_currentDirectory, project.ProjectInfos.Name);
             Directory.CreateDirectory(_currentDirectory);
           
-            if (project.IsPython()) InitPython(project);
-            else if (project.IsHtml()) InitHtml(project);
+            if (project.IsPython()) InitPython(project.ProjectInfos as PythonInfo);
+            // else if (project.IsHtml()) InitHtml(project);
             else if (project.IsPhp()) InitPhp(_currentDirectory);
 
         }
 
-        private void InitPython(IProjectInfo project)
+        private void InitPython(PythonInfo? project)
         {
             File.Create(Path.Combine(_currentDirectory, "main.py"));
         }
 
-        private void InitHtml(IProjectInfo project)
-        {
-            StringBuilder htmlbody = new StringBuilder();
-            StreamWriter fs = new StreamWriter(File.Create(Path.Combine(_currentDirectory, "index" + ".html")));
+//         private void InitHtml(IProjectInfo project)
+//         {
+//             StringBuilder htmlbody = new StringBuilder();
+//             StreamWriter fs = new StreamWriter(File.Create(Path.Combine(_currentDirectory, "index" + ".html")));
 
-            string css = "";
-            string js = "";
-            if (projectoptions[0])
-            {
-                StreamWriter fscss = new StreamWriter(File.Create(Path.Combine(_currentDirectory, "style" + ".css")));
-                css = "<link rel='stylesheet' type='text/css' media='screen' href='style.css'>";
-                fscss.Close();
-            }
-            if (projectoptions[1])
-            {
-                StreamWriter fsjs = new StreamWriter(File.Create(Path.Combine(_currentDirectory, "main" + ".js")));
-                js = "<script src='main.js'></script>";
-                fsjs.Close();
-            }
+//             string css = "";
+//             string js = "";
+//             if (projectoptions[0])
+//             {
+//                 StreamWriter fscss = new StreamWriter(File.Create(Path.Combine(_currentDirectory, "style" + ".css")));
+//                 css = "<link rel='stylesheet' type='text/css' media='screen' href='style.css'>";
+//                 fscss.Close();
+//             }
+//             if (projectoptions[1])
+//             {
+//                 StreamWriter fsjs = new StreamWriter(File.Create(Path.Combine(_currentDirectory, "main" + ".js")));
+//                 js = "<script src='main.js'></script>";
+//                 fsjs.Close();
+//             }
 
 
-            htmlbody.Append(
-$@"
-<!DOCTYPE html>
-<html lang='fr'>
-<head>
-    <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Page Title</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-    {css}
-    {js}
-</head>
-<body>
+//             htmlbody.Append(
+// $@"
+// <!DOCTYPE html>
+// <html lang='fr'>
+// <head>
+//     <meta charset='utf-8'>
+//     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+//     <title>Page Title</title>
+//     <meta name='viewport' content='width=device-width, initial-scale=1'>
+//     {css}
+//     {js}
+// </head>
+// <body>
     
-</body>
-</html>
+// </body>
+// </html>
             
-");
+// ");
 
-            fs.Write(htmlbody);
-            fs.Close();
+//             fs.Write(htmlbody);
+//             fs.Close();
 
-        }
+//         }
 
 
         private void InitPhp(string ProjectFullPath)

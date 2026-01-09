@@ -1,13 +1,18 @@
-﻿
+﻿using System.Formats.Asn1;
+using ManagerLyxCommon;
+using ProjectManagerCommon;
+using ProjectManagerLibs;
 
 class Program
 {
+    private static LibsGlobal _libsGlobal = new LibsGlobal();
+    private static ProjectTypes _projectTypes = new ProjectTypes();
     public static void Main(string[] args)
     {
         if (args.Count() == 0)
         {
             DisplayWelcome();
-            Environment.Exit(1);
+            Environment.Exit(0);
         }
 
         switch (args[0].ToLower())
@@ -16,6 +21,12 @@ class Program
                 DisplayHelper();
                 break;
             case "create":
+                if (args.Count() <= 1)
+                {
+                    Console.WriteLine("Aucun agument trouver pour la commande create");
+                    Environment.Exit(1);
+                }
+                else CreateCase(args[1]);
                 break;
             case "list":
                 break;
@@ -24,7 +35,25 @@ class Program
                 break;
         }
 
+        Environment.Exit(0);
     }
+
+    private static void CreateCase(string projectType)
+    {
+        switch (projectType.ToLower())
+        {
+            case "python":
+                Console.Write("Nom du projet : ");
+                string projectName = Console.ReadLine() ?? "default";
+                PythonInfo pythonInfo = new PythonInfo(){Name = projectName, Option = " "};
+                _libsGlobal.InitProject<PythonInfo>(new ProjectInfo<PythonInfo>(){ProjectInfos = pythonInfo, Type = _projectTypes.Python});
+                break;
+            default:
+                Console.WriteLine($"commande {projectType} inconnu\nVoir `lyx help` pour plus d'information");
+                break;
+        }   
+    }
+
 
     private static void DisplayWelcome()
     {

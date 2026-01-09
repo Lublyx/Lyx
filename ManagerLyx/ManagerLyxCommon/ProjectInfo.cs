@@ -1,11 +1,12 @@
-﻿namespace ProjectManagerCommon
+﻿using ManagerLyxCommon;
+
+namespace ProjectManagerCommon
 {
-    public class IProjectInfo
+    public class ProjectInfo<T> where T : IProjectBase
     {
-        public required string Name { get; set; }
+        public required T ProjectInfos {get; set;} //can be of type : (IPythonInfo, IHtmlInfo, IPhpInfo, IDotnetInfo)
         public required string Type { get; set; }
-        public required string Option {get; set;}
-        private IProjectTypes _projectTypes = new IProjectTypes();
+        private ProjectTypes _projectTypes = new ProjectTypes();
         
         public bool IsPython()
         {
