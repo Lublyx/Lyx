@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ManagerLyxCommon;
+using ManagerLyxLibs;
 using ProjectManagerCommon;
 
 
@@ -14,68 +15,30 @@ namespace ProjectManagerLibs
     public class CreateProjectHelper
     {
         private ProjectTypes _projecttypes = new ProjectTypes();
+        private PythonHelper _pythonHelper = new PythonHelper();
+        private HtmlHelper _htmlHelper = new HtmlHelper();
         private string _currentDirectory = Directory.GetCurrentDirectory();
 
         public void InitProject<T>(ProjectInfo<T> project) where T : IProjectBase
         {
             _currentDirectory = Path.Combine(_currentDirectory, project.ProjectInfos.Name);
+            
+            if (Directory.Exists(_currentDirectory))
+            {
+                Console.WriteLine($"Le dossier {project.ProjectInfos.Name} existe déjà");
+                return;
+            }
+
             Directory.CreateDirectory(_currentDirectory);
-          
-            if (project.IsPython()) InitPython(project.ProjectInfos as PythonInfo);
-            // else if (project.IsHtml()) InitHtml(project);
+            if (project.IsPython()) _pythonHelper.InitPython(project.ProjectInfos as PythonInfo, _currentDirectory);
+            else if (project.IsHtml()) _htmlHelper.InitHtml(project.ProjectInfos as HtmlInfo, _currentDirectory);
             else if (project.IsPhp()) InitPhp(_currentDirectory);
 
         }
 
-        private void InitPython(PythonInfo? project)
-        {
-            File.Create(Path.Combine(_currentDirectory, "main.py"));
-        }
+       
 
-//         private void InitHtml(IProjectInfo project)
-//         {
-//             StringBuilder htmlbody = new StringBuilder();
-//             StreamWriter fs = new StreamWriter(File.Create(Path.Combine(_currentDirectory, "index" + ".html")));
-
-//             string css = "";
-//             string js = "";
-//             if (projectoptions[0])
-//             {
-//                 StreamWriter fscss = new StreamWriter(File.Create(Path.Combine(_currentDirectory, "style" + ".css")));
-//                 css = "<link rel='stylesheet' type='text/css' media='screen' href='style.css'>";
-//                 fscss.Close();
-//             }
-//             if (projectoptions[1])
-//             {
-//                 StreamWriter fsjs = new StreamWriter(File.Create(Path.Combine(_currentDirectory, "main" + ".js")));
-//                 js = "<script src='main.js'></script>";
-//                 fsjs.Close();
-//             }
-
-
-//             htmlbody.Append(
-// $@"
-// <!DOCTYPE html>
-// <html lang='fr'>
-// <head>
-//     <meta charset='utf-8'>
-//     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-//     <title>Page Title</title>
-//     <meta name='viewport' content='width=device-width, initial-scale=1'>
-//     {css}
-//     {js}
-// </head>
-// <body>
-    
-// </body>
-// </html>
-            
-// ");
-
-//             fs.Write(htmlbody);
-//             fs.Close();
-
-//         }
+        
 
 
         private void InitPhp(string ProjectFullPath)

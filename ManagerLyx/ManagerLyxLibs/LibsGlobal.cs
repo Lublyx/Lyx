@@ -13,7 +13,7 @@ namespace ProjectManagerLibs
     public class LibsGlobal
     {
         private CreateProjectHelper _createproject = new CreateProjectHelper();
-        private DotnetHelper _dotnethelper = new DotnetHelper();
+        private DotnetHelper _dotnetHelper = new DotnetHelper();
 
    
         public void InitProject<T>(ProjectInfo<T> ProjectToCreate) where T : IProjectBase

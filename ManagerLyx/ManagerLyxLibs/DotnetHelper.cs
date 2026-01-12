@@ -1,26 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Xml;
-using ProjectManagerCommon;
+﻿using System.Text.RegularExpressions;
+using ManagerLyxLibs;
 
 namespace ProjectManagerLibs
 {
     public class DotnetHelper
     {
 
+        private ProcessHelper _processHelper = new ProcessHelper();
+        private string _currentDirectory = Directory.GetCurrentDirectory();
+
 
         #region Methode
+
 
         public Dictionary<string, string> GetDotnetOptions()
         {
             Dictionary<string, string> projectNameKeyList = new Dictionary<string, string>();
             string commandargs = "dotnet new list --type Project";
-            string StrProj = CommandExecute(commandargs);
+            string StrProj = _processHelper.CommandExecute(commandargs, _currentDirectory);
             Regex regex = new Regex(@"^(.*?)\s{2,}(.*?)\s{2,}");
             foreach (string line in StrProj.Split('\n'))
             {
@@ -47,7 +44,7 @@ namespace ProjectManagerLibs
         {
             List<string> dotnetVersion = new List<string>();
             string commandargs = "dotnet --list-runtimes";
-            string StrVers = CommandExecute(commandargs);
+            string StrVers = _processHelper.CommandExecute(commandargs, _currentDirectory);
             Regex regex = new Regex(@"((\d{1}.\d{1}).\d{1,})");
             foreach (string line in StrVers.Split('\n'))
             {
@@ -59,35 +56,6 @@ namespace ProjectManagerLibs
             }
             return dotnetVersion;
         }
-
-
-
-
-        private string CommandExecute(string argument)
-        {
-
-            Process process = new Process()
-            {
-                StartInfo = new ProcessStartInfo
-                {
-                    FileName = "cmd.exe",
-                    Arguments = @$"/c {argument}",
-                    CreateNoWindow = true,
-                    RedirectStandardOutput = true,
-                    UseShellExecute = false,
-                },
-            };
-
-
-            process.Start();
-
-            string output = process.StandardOutput.ReadToEnd();
-
-
-
-            return output;
-        }
-
 
 
         #endregion Methode

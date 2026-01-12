@@ -26,9 +26,12 @@ class Program
                     Console.WriteLine("Aucun agument trouver pour la commande create");
                     Environment.Exit(1);
                 }
+                else if (args.Count() == 3) CreateCase(args[1], args[2]);
                 else CreateCase(args[1]);
                 break;
             case "list":
+                if (args.Count() == 2) ListProject(args[1]);
+                else ListProject();
                 break;
             default:
                 Console.WriteLine($"commande {args[0]} inconnu\nVoir `lyx help` pour plus d'information");
@@ -38,22 +41,92 @@ class Program
         Environment.Exit(0);
     }
 
-    private static void CreateCase(string projectType)
+    private static void ListProject(string projectType = "")
+    {
+        switch (projectType)
+        {
+            case "python":
+                Console.WriteLine(@"
+**Projet Python disponnible :**
+- `flask` : `Permet de créé un project Python avec Flask pré-installer dans un envrionement virtuel`
+- `pygame` : `Permet de créé un project Python avec PyGame pré-installer dans un envrionement virtuel`
+        ");
+                break;
+            case "html":
+                Console.WriteLine(@"
+**Projet Html disponnible :**
+- `javascript` : `Permet de créé un project web en HTML/CSS avec javascript`
+- `typescript` : `Permet de créé un project web en HTML/CSS avec typescript pré-configurer`
+        ");
+                break;
+            default:
+                Console.WriteLine(@"
+**Projet disponnible :**
+- `python` (option) : `Permet de créé un project Python`
+- `html` (option) : `Permet de créé un project web en HTML et CSS`
+- `php` : `Permet de créé un project web en PHTML/CSS et PHP`
+        ");
+                break;
+        }
+    }
+
+    private static void CreateCase(string projectType, string projectOption = "")
     {
         switch (projectType.ToLower())
         {
             case "python":
-                Console.Write("Nom du projet : ");
-                string projectName = Console.ReadLine() ?? "default";
-                PythonInfo pythonInfo = new PythonInfo(){Name = projectName, Option = " "};
-                _libsGlobal.InitProject<PythonInfo>(new ProjectInfo<PythonInfo>(){ProjectInfos = pythonInfo, Type = _projectTypes.Python});
+                CreatePython(projectOption);
+                break;
+            case "html":
+                CreateHtml(projectOption);
                 break;
             default:
                 Console.WriteLine($"commande {projectType} inconnu\nVoir `lyx help` pour plus d'information");
                 break;
-        }   
+        }
     }
 
+    private static void CreatePython(string projectOption)
+    {
+        Console.Write("Nom du projet : ");
+        string projectName = Console.ReadLine() ?? "default";
+        EnumOptions.PythonOptions option;
+        switch (projectOption.ToLower())
+        {
+            case "flask":
+                option = EnumOptions.PythonOptions.flask;
+                break;
+            case "pygame":
+                option = EnumOptions.PythonOptions.pygame;
+                break;
+            default:
+                option = EnumOptions.PythonOptions.vanilla;
+                break;
+        }
+        PythonInfo pythonInfo = new PythonInfo() { Name = projectName, Option = option };
+        _libsGlobal.InitProject<PythonInfo>(new ProjectInfo<PythonInfo>() { ProjectInfos = pythonInfo, Type = _projectTypes.Python });
+    }
+
+    private static void CreateHtml(string projectOption)
+    {
+        Console.Write("Nom du projet : ");
+        string projectName = Console.ReadLine() ?? "default";
+        EnumOptions.HtmlOptions option;
+        switch (projectOption.ToLower())
+        {
+            case "javascript":
+                option = EnumOptions.HtmlOptions.javascript;
+                break;
+            case "typescript":
+                option = EnumOptions.HtmlOptions.typescript;
+                break;
+            default:
+                option = EnumOptions.HtmlOptions.vanilla;
+                break;
+        }
+        HtmlInfo htmlInfo = new HtmlInfo() { Name = projectName, Option = option };
+        _libsGlobal.InitProject<HtmlInfo>(new ProjectInfo<HtmlInfo>() { ProjectInfos = htmlInfo, Type = _projectTypes.Html });
+    }
 
     private static void DisplayWelcome()
     {
