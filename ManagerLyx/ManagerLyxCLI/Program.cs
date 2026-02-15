@@ -56,15 +56,22 @@ class Program
                 Console.WriteLine(@"
 **Projet Html disponnible :**
 - `javascript` : `Permet de créé un project web en HTML/CSS avec javascript`
-- `typescript` : `Permet de créé un project web en HTML/CSS avec typescript pré-configurer`
+- `typescript` : `Permet de créé un project web en HTML/CSS avec typescript pré-configurer (Node.js doit être installé !!)`
         ");
                 break;
+            case "php":
+            Console.WriteLine(@"
+**Projet Php disponnible :**
+- `laravel` : `Permet de créé un project php avec le framework laravel (laravel doit être installé !!)`
+- `symfony` : `Permet de créé un project php avec le framework symfony (symfony doit être installé !!)`
+        ");
+            break;
             default:
                 Console.WriteLine(@"
 **Projet disponnible :**
 - `python` (option) : `Permet de créé un project Python`
 - `html` (option) : `Permet de créé un project web en HTML et CSS`
-- `php` : `Permet de créé un project web en PHTML/CSS et PHP`
+- `php` (option) : `Permet de créé un project web en PHTML/CSS et PHP`
         ");
                 break;
         }
@@ -79,6 +86,9 @@ class Program
                 break;
             case "html":
                 CreateHtml(projectOption);
+                break;
+            case "php":
+                CreatePhp(projectOption);
                 break;
             default:
                 Console.WriteLine($"commande {projectType} inconnu\nVoir `lyx help` pour plus d'information");
@@ -126,6 +136,27 @@ class Program
         }
         HtmlInfo htmlInfo = new HtmlInfo() { Name = projectName, Option = option };
         _libsGlobal.InitProject<HtmlInfo>(new ProjectInfo<HtmlInfo>() { ProjectInfos = htmlInfo, Type = _projectTypes.Html });
+    }
+
+    private static void CreatePhp(string projectOption)
+    {
+        Console.WriteLine("Nom du projet : ");
+        string projectName = Console.ReadLine() ?? "default";
+        EnumOptions.PhpOptions option;
+        switch (projectOption.ToLower())
+        {
+            case "laravel":
+                option = EnumOptions.PhpOptions.laravel;
+                break;
+            case "symfony":
+                option = EnumOptions.PhpOptions.symfony;
+                break;
+            default:
+                option = EnumOptions.PhpOptions.vanilla;
+                break;
+        }
+        PhpInfo phpInfo = new PhpInfo(){Name = projectName, Options = option};
+        _libsGlobal.InitProject<PhpInfo>(new ProjectInfo<PhpInfo>() {ProjectInfos = phpInfo, Type = _projectTypes.Php});
     }
 
     private static void DisplayWelcome()

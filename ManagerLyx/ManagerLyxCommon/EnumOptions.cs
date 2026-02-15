@@ -18,5 +18,12 @@ public class EnumOptions
         javascript,
         typescript,
     }
+
+    public enum PhpOptions
+    {
+        vanilla,
+        symfony,
+        laravel,
+    }
 }
 
