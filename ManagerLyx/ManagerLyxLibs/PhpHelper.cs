@@ -6,6 +6,9 @@ namespace ManagerLyxLibs;
 
 public class PhpHelper
 {
+
+    private ProcessHelper _processHelper = new ProcessHelper();
+
     public void InitPhp(PhpInfo? phpInfo, string currentDirectory)
     {
         if (phpInfo == null)
@@ -15,7 +18,7 @@ public class PhpHelper
 
         if (phpInfo.IsLaravel())
         {
-            this.CreateLaravel(currentDirectory);
+            this.CreateLaravel(currentDirectory, phpInfo.Name);
         }
         else if (phpInfo.IsSymfony())
         {
@@ -27,9 +30,9 @@ public class PhpHelper
         }
     }
     
-    private void CreateLaravel(string currentDirectory)
+    private void CreateLaravel(string currentDirectory, string projectName)
     {
-        Console.WriteLine("laravel");
+        _processHelper.CommandExecute($"laravel new {projectName} -n", currentDirectory);
     }
     
     private void CreateSymfony(string currentDirectory)
