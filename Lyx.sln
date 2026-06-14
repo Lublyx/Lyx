@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lyx.CLI", "Lyx.CLI\Lyx.CLI.csproj", "{4C48551B-0AC5-44E7-8CB9-AF8102A519F5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lyx.Application", "Lyx.Application\Lyx.Application.csproj", "{21319BA8-54E4-4CA0-BF99-3DA245A50366}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lyx.Domain", "Lyx.Domain\Lyx.Domain.csproj", "{98A24878-ABAA-49B1-B0E2-79D23BCB5CE2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lyx.Infrastructure", "Lyx.Infrastructure\Lyx.Infrastructure.csproj", "{D9A169D4-1A42-402A-B49D-33CC09385C6A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4C48551B-0AC5-44E7-8CB9-AF8102A519F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C48551B-0AC5-44E7-8CB9-AF8102A519F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C48551B-0AC5-44E7-8CB9-AF8102A519F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C48551B-0AC5-44E7-8CB9-AF8102A519F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21319BA8-54E4-4CA0-BF99-3DA245A50366}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21319BA8-54E4-4CA0-BF99-3DA245A50366}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21319BA8-54E4-4CA0-BF99-3DA245A50366}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21319BA8-54E4-4CA0-BF99-3DA245A50366}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98A24878-ABAA-49B1-B0E2-79D23BCB5CE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98A24878-ABAA-49B1-B0E2-79D23BCB5CE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98A24878-ABAA-49B1-B0E2-79D23BCB5CE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98A24878-ABAA-49B1-B0E2-79D23BCB5CE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9A169D4-1A42-402A-B49D-33CC09385C6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9A169D4-1A42-402A-B49D-33CC09385C6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9A169D4-1A42-402A-B49D-33CC09385C6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9A169D4-1A42-402A-B49D-33CC09385C6A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

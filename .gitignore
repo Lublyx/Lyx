@@ -10,6 +10,9 @@
 #Folder
 bin/*
 obj/*
+.vscode/*
+.idea/*
+.DS_STORE
 
 # Build results
 [Dd]ebug/
