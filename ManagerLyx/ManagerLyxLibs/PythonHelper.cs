@@ -30,9 +30,6 @@ public class PythonHelper
 
     public void InitVenv(string modulName, string currentDirectory)
     {
-        if (_systemHelper.IsLinux() || _systemHelper.IsOsx()) 
-            _processHelper.CommandExecute($"python -m venv .venv && source .venv/bin/activate && pip install --upgrade pip && {modulName}", currentDirectory);
-        else if (_systemHelper.IsWindows()) 
-            _processHelper.CommandExecute($@"python -m venv .venv && .venv\Scripts\activate && pip install --upgrade pip && {modulName}", currentDirectory);
+       
     }
 }
