@@ -9,14 +9,9 @@ using Lyx.Domain.Statics;
 
 namespace Lyx.CLI;
 
-public class App
+public class App(ICreateProjectsUserCase projects)
 {
-    private readonly ICreateProjectsUserCase _projects;
-    
-    public App(ICreateProjectsUserCase projects)
-    {
-        _projects = projects;
-    }
+    private readonly ICreateProjectsUserCase _projects = projects;
 
     public void Run(string[] args)
     {

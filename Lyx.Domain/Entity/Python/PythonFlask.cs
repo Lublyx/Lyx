@@ -1,4 +1,5 @@
 using Lyx.Domain.OutputPort;
+using Lyx.Domain.Statics;
 
 namespace Lyx.Domain.Entity.Python;
 
@@ -9,8 +10,8 @@ public class PythonFlask : Python
     public override bool Init(IProcessRunner process)
     {
         base.Init(process);
-
-        base.SetUpVenv(_flask);
+        SetUpVenv(_flask);
+        CreateTemplateFile(ProjectsTemplates.Python.Flask);
 
         return true;
     }
