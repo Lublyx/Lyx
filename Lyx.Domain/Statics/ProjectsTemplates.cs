@@ -4,23 +4,23 @@ public static class ProjectsTemplates
 {
     public static class Python
     {
-        public const string Native = @"
-print('Hello world!')
-";
+        public const string Native = """
+print("Hello world!")
+""";
 
-        public const string Flask = @"
+        public const string Flask = """
 from flask import Flask
 app = Flask(__name__)
 
 @app.route('/')
 def index():
-  return 'Hello World!'
+  return "Hello World!"
 
-if __name__ == '__main__':
+if __name__ == "__main__":
   app.run(debug=True)
-";
+""";
 
-    public const string PyGame = @"
+        public const string PyGame = """
 import pygame
 from pygame.locals import *
 
@@ -43,30 +43,35 @@ def run(self):
                 App.running = False
     pygame.quit()
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     App().run()
-";
+""";
     }
 
     public static class Html
     {
-        public const string Native = @"
+        public static string NativeHtml(bool script = false)
+        {
+            return $"""
 <!DOCTYPE html>
-<html lang='fr'>
+<html lang="fr">
   <head>
-    <meta charset='UTF-8'>
-    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>My Website</title>
-    <link rel='stylesheet' href='./style.css'>
-    <link rel='icon' href='./favicon.ico' type='image/x-icon'>
+    <link rel="stylesheet" href="./style.css">
+    <link rel="icon" href="./favicon.ico" type="image/x-icon">
   </head>
   <body>
     <main>
         <h1>Welcome to My Website</h1>  
     </main>
   </body>
+  {(script ? """<script src="./script.js"></script>""" : "")}
 </html>
-";
+""";
+        }
+        public const string JavaScript = """const paragraphs = document.querySelectorAll("h1");""";
     }
 }

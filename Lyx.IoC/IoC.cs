@@ -1,7 +1,8 @@
 ﻿using Lyx.Application.CreateProjects;
 using Lyx.Domain.InputPort;
 using Lyx.Domain.OutputPort;
-using Lyx.Infrastructure.Utilites;
+using Lyx.Infrastructure.DirectoryUtils;
+using Lyx.Infrastructure.ProcessUtils;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Lyx.IoC;
@@ -12,5 +13,6 @@ public static class IoC
     {
         services.AddSingleton<IProcessRunner, ProcessRunner>();
         services.AddSingleton<ICreateProjectsUserCase, CreateProjectsUseCase>();
+        services.AddSingleton<IProjectDirectory, ProjectDirectory>();
     }
 }

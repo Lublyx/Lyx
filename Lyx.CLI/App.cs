@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Lyx.Domain.Entity.Html;
 using Lyx.Domain.Entity.Python;
 using Lyx.Domain.InputPort;
 using Lyx.Domain.Interfaces;
@@ -105,28 +106,27 @@ public class App(ICreateProjectsUserCase projects)
                 python = new Python(){ProjectName = projectName, ProjectPath = EnvironmentInfo.GetCurrentDirectory()};
                 break;
         }
-        _projects.Create(python);
+        if (_projects.Create(python)) Success();
     }
 
     private void CreateHtml(string projectOption)
     {
-        // Console.Write("Nom du projet : ");
-        // string projectName = Console.ReadLine() ?? "default";
-        // EnumOptions.HtmlOptions option;
-        // switch (projectOption.ToLower())
-        // {
-        //     case "javascript":
-        //         option = EnumOptions.HtmlOptions.javascript;
-        //         break;
-        //     case "typescript":
-        //         option = EnumOptions.HtmlOptions.typescript;
-        //         break;
-        //     default:
-        //         option = EnumOptions.HtmlOptions.vanilla;
-        //         break;
-        // }
-        // HtmlInfo htmlInfo = new HtmlInfo() { Name = projectName, Option = option };
-        // _libsGlobal.InitProject<HtmlInfo>(new ProjectInfo<HtmlInfo>() { ProjectInfos = htmlInfo, Type = _projectTypes.Html });
+        Console.Write("Nom du projet : ");
+        string projectName = Console.ReadLine() ?? "default";
+        IProjectInfo html;
+        switch (projectOption.ToLower())
+        {
+            case "javascript":
+                html = new HtmlJavascript(){ProjectName = projectName, ProjectPath = EnvironmentInfo.GetCurrentDirectory()};
+                break;
+            case "typescript":
+                html = new HtmlTypescript(){ProjectName = projectName, ProjectPath = EnvironmentInfo.GetCurrentDirectory()};
+                break;
+            default:
+                html = new Html(){ProjectName = projectName, ProjectPath = EnvironmentInfo.GetCurrentDirectory()};
+                break;
+        }
+        if (_projects.Create(html)) Success();
     }
 
     private void CreatePhp(string projectOption)
@@ -150,5 +150,9 @@ public class App(ICreateProjectsUserCase projects)
         // _libsGlobal.InitProject<PhpInfo>(new ProjectInfo<PhpInfo>() { ProjectInfos = phpInfo, Type = _projectTypes.Php });
     }
 
+    public static void Success()
+    {
+        Console.WriteLine("Projet créé !");
+    }
 
 }

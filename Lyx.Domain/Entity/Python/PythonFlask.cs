@@ -7,9 +7,9 @@ public class PythonFlask : Python
 {
     private const string _flask = "Flask";
 
-    public override bool Init(IProcessRunner process)
+    public override bool Init(IProcessRunner process, IProjectDirectory projectDirectory)
     {
-        base.Init(process);
+        if (!base.Init(process, projectDirectory)) return false;
         SetUpVenv(_flask);
         CreateTemplateFile(ProjectsTemplates.Python.Flask);
 

@@ -2,7 +2,7 @@ using System.Diagnostics;
 using Lyx.Domain.OutputPort;
 using Lyx.Domain.Statics;
 
-namespace Lyx.Infrastructure.Utilites;
+namespace Lyx.Infrastructure.ProcessUtils;
 
 public class ProcessRunner : IProcessRunner
 {
