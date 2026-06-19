@@ -1,4 +1,5 @@
 ﻿using Lyx.Application.CreateProjects;
+using Lyx.Application.ListProjects;
 using Lyx.Domain.InputPort;
 using Lyx.Domain.OutputPort;
 using Lyx.Infrastructure.DirectoryUtils;
@@ -14,5 +15,6 @@ public static class IoC
         services.AddSingleton<IProcessRunner, ProcessRunner>();
         services.AddSingleton<ICreateProjectsUserCase, CreateProjectsUseCase>();
         services.AddSingleton<IProjectDirectory, ProjectDirectory>();
+        services.AddSingleton<IListProjectsUseCase, ListProjectsUseCase>();
     }
 }

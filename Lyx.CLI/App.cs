@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Lyx.Domain.Entity.Dotnet;
 using Lyx.Domain.Entity.Html;
 using Lyx.Domain.Entity.Python;
 using Lyx.Domain.InputPort;
@@ -10,9 +11,10 @@ using Lyx.Domain.Statics;
 
 namespace Lyx.CLI;
 
-public class App(ICreateProjectsUserCase projects)
+public class App(ICreateProjectsUserCase projects, IListProjectsUseCase listProjects)
 {
     private readonly ICreateProjectsUserCase _projects = projects;
+    private readonly IListProjectsUseCase _listProjects = listProjects;
 
     public void Run(string[] args)
     {
@@ -21,6 +23,7 @@ public class App(ICreateProjectsUserCase projects)
             Documentation.DisplayWelcome();
             Environment.Exit(0);
         }
+        _listProjects.GetProjectsOptions();
 
         switch (args[0].ToLower())
         {
@@ -65,6 +68,9 @@ public class App(ICreateProjectsUserCase projects)
             case "php":
                 Console.WriteLine(Documentation.PhpProjects);
                 break;
+            case "dotnet":
+                Console.WriteLine(Documentation.DotnetProjects);
+                break;
             default:
                 break;
         }
@@ -82,6 +88,9 @@ public class App(ICreateProjectsUserCase projects)
                 break;
             case "php":
                 CreatePhp(projectOption);
+                break;
+            case "dotnet":
+                CreateDotnet(projectOption);
                 break;
             default:
                 Console.WriteLine($"commande {projectType} inconnu\nVoir `lyx help` pour plus d'information");
@@ -148,6 +157,21 @@ public class App(ICreateProjectsUserCase projects)
         // }
         // PhpInfo phpInfo = new PhpInfo() { Name = projectName, Options = option };
         // _libsGlobal.InitProject<PhpInfo>(new ProjectInfo<PhpInfo>() { ProjectInfos = phpInfo, Type = _projectTypes.Php });
+    }
+
+    private void CreateDotnet(string projectOption)
+    {
+        Console.WriteLine("Nom de la solution :");
+        string solutionName = Console.ReadLine() ?? "default";
+        string projectName = string.Empty;
+        if (!string.IsNullOrEmpty(projectOption))
+        {
+            Console.WriteLine("Nom du projet :");
+            projectName = Console.ReadLine() ?? string.Empty;
+        }
+        IProjectInfo dotnet = new Dotnet() {SolutionName = solutionName, ProjectName = projectName, ProjectPath = EnvironmentInfo.GetCurrentDirectory(), ApplicationType = projectOption};
+
+        _projects.Create(dotnet);
     }
 
     public static void Success()

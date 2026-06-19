@@ -1,4 +1,4 @@
-using System.Reflection.Metadata;
+using System.Reflection.Metadata.Ecma335;
 
 namespace Lyx.Domain.Statics;
 
@@ -42,6 +42,11 @@ public static class Documentation
 - `python` (option) : `Permet de créé un project Python`
 - `html` (option) : `Permet de créé un project web en HTML et CSS`
 - `php` (option) : `Permet de créé un project web en PHTML/CSS et PHP`
+    ";
+
+    public static string DotnetProjects {get; set;} = @"
+**Projet disponnible :**
+
     ";
 
     public static void DisplayWelcome()

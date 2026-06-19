@@ -24,27 +24,35 @@ public class ProcessRunner : IProcessRunner
     }
     public string Start(string argument, string workingDirectory)
     {
-        if (EnvironmentInfo.IsLinux() || EnvironmentInfo.IsOsx())
+        try
         {
-            argument = $"\"{argument}\"";
-        }
 
-        Process process = new Process()
-        {
-            StartInfo = new ProcessStartInfo
+            if (EnvironmentInfo.IsLinux() || EnvironmentInfo.IsOsx())
             {
-                FileName = $"{_bash}",
-                Arguments = $"{_bashOption} {argument}",
-                CreateNoWindow = true,
-                RedirectStandardOutput = true,
-                UseShellExecute = false,
-                WorkingDirectory = workingDirectory,
-            },
-        };
+                argument = $"\"{argument}\"";
+            }
 
-        process.Start();
-        string output = process.StandardOutput.ReadToEnd();
+            Process process = new Process()
+            {
+                StartInfo = new ProcessStartInfo
+                {
+                    FileName = $"{_bash}",
+                    Arguments = $"{_bashOption} {argument}",
+                    CreateNoWindow = true,
+                    RedirectStandardOutput = true,
+                    UseShellExecute = false,
+                    WorkingDirectory = workingDirectory,
+                },
+            };
 
-        return output;
+            process.Start();
+            string output = process.StandardOutput.ReadToEnd();
+
+            return output;
+        }
+        catch (Exception e)
+        {
+            throw new InvalidOperationException(e.Message);
+        }
     }
 }
